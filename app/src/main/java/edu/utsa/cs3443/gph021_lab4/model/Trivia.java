@@ -2,6 +2,7 @@ package edu.utsa.cs3443.gph021_lab4.model;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,6 +35,12 @@ public class Trivia {
     }
 
     // TODO: write the setters and getters for all the instance variable
+
+    public String getCorrectAnswer() {
+        return this.correctAnswer;
+    }
+
+
     /*
     @param: Activity activity
     @return Trivia object
@@ -84,17 +91,32 @@ public class Trivia {
 
             return (this);
         } catch (FileNotFoundException e) {
-            System.err.println("File not found");
+            Log.d("File Exception", "File not found");
         } catch (IOException e) {
-            System.err.println("IO exception, which is a super class of FileNotFoundException");
+            Log.d("File Exception", "IO Exception");
         }
 
+        identifyCorrectAnswer();
         return (this);
+        //if catch happens, meaning we have an error reading or accessing the file:
+        //we see a print statement (log.d)
+        //then the program control return (this)
+        // this is pointing to the current object if tricia, but all instance variables(such as question, options, ect.)
+        //are going to be NULL! Because we weren't successful in reading them from the file
     }
 
     private void identifyCorrectAnswer(){
         //takes all the options and checks if the description contains any of the options, if so that
         // option becomes the correctAnswer
+        if(this.descriptionAnswer.contains(this.option1)){
+            this.correctAnswer = this.option1;
+        }
+        else if (this.descriptionAnswer.contains(this.option2)) {
+            this.correctAnswer = this.option2;
+
+        }
+        else
+            this.correctAnswer = this.option3;
 
     }
 }
